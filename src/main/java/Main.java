@@ -96,12 +96,12 @@ public class Main {
          *
          */
 
-        Query consulta4 = em.createNativeQuery("select \n" +
-                "h.name,\n" +
-                "(select count(e.person_enrollment) from enrollment as e\n" +
-                "where e.person_enrollment in (select p.id from person as p \n" +
-                "where p.house_id=h.id)) as cantidad_cursos\n" +
-                "from house as h", Tuple.class);
+        Query consulta4 = em.createNativeQuery("""
+                select 
+                h.name,(select count(e.person_enrollment) from enrollment as e
+                where e.person_enrollment in (select p.id from person as p 
+                where p.house_id=h.id)) as cantidad_cursos
+                from house as h """, Tuple.class);
         List<Tuple> tuplas3 = consulta4.getResultList();
 
         System.out.println("Nombre del curso:"+"  Cantidad de cursos implicados:");
